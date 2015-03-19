@@ -1,3 +1,9 @@
+<?php
+
+$Aviation[] = array('A-02','A minimum flight level of 150 must be maintained whilst flying over city limits','10000',NULL,'I',NULL);
+
+?>
+
 <!DOCTYPE html>
 <html lang='en'>
 <head>
@@ -33,14 +39,19 @@
 						</tr>
 					</thead>
 					<tbody>
+					<?php 
+						foreach($Aviation as $values) {
+					?>
 						<tr>
-							<td>A-02</td>
-							<td>A minimum flight level of 150 must be maintained whilst flying over city limits</td>
-							<td><button class='ticketbutton' data-ticketvalue='10000'>$10,000</button></td>
-							<td> N/A </td>
-							<td><button class='ticketbutton' data-specialvalue='Impound Vehicle'>Impound Vahicle</button></td>
-							<td> N/A </td>
+							<td><?= $values[0]; ?></td>
+							<td><?= $values[1]; ?></td>
+							<td><button class='ticketbutton' data-ticketvalue='<?= $values[2]; ?>'><?php echo "$ ".number_format($value[2], 2);?></button></td>
+							<td><?php if($value[3] != NULL) { ?> <button class='ticketbutton' data-ticketvalue='<?= $values[3]; ?>'><?php echo "$ ".number_format($value[3], 2);?></button> <?php } ?></td>
+							<td><?php if($value[4] == 'I') { ?><button class='ticketbutton' data-specialvalue='Impound Vehicle'>Impound Vahicle</button><?php } ?></td>
+							<td> <?php if($value[5] != NULL) echo $value[5]; ?></td>
 						</tr>
+						<? } ?>
+						<!--
 						<tr>
 							<td>A-03</td>
 							<td>Aircraft doesn't possess or use collision lights in low-light conditions</td>
@@ -57,6 +68,7 @@
 							<td><button class='ticketbutton' data-specialvalue='Impound Vehicle'>Impound Vahicle</button></td>
 							<td> N/A </td>
 						</tr>
+					-->
 					</tbody>
 				</table>
 				<h2>Criminal Offences</h2>
@@ -503,6 +515,7 @@ function updateJailTime() {
 }
 function updateTicketTotal() {
  ticketValues += $(this).data('ticketvalue');
+  $(this).closest("tr").toggleClass("text-success");
 
   $('#ticketTotalDisp').html(ticketValues);
 }
